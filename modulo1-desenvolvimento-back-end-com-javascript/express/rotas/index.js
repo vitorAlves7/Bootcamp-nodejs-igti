@@ -34,7 +34,39 @@ app.get("/testParam/:id/:a?",(req,res) => {
     res.send(req.params.id + " " + req.params.a);
 });
 
+//parametros via query
 
+app.get("/testQuery", (req,res, ) => {
+    res.send(req.query);
+});
+
+//Next
+app.get("/testMultipleHandlers",(req,res, next) => {
+    console.log("Callback1");
+    next();
+}, (req,res) =>{
+    console.log("Callback 1");
+    res.end();
+});
+
+// Nexto com array 
+
+const callback1 = (req, res, next) =>{
+    console.log("Callback 1");
+    next();
+};
+
+const callback2 = (req,res,next) => {
+    console.log("Callback 2")
+    next();
+};
+
+const callback3 = (req,res) => {
+    console.log("Callback 3");
+    res.end();
+};
+
+app.get("/testMultipleHandlersArray",[callback1,callback2,callback3]);
 
 app.listen(3000, () => {
     console.log("API Started!");
